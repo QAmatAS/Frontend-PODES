@@ -123,7 +123,7 @@ const GeospatialMap = () => {
       const geoJson = await geoResponse.json();
       
       // Load PODES data from correct endpoint
-      const podesResponse = await fetch('https://backend-podes.vercel.app/api/villages');
+      const podesResponse = await fetch('http://localhost:5001/api/villages');
       if (!podesResponse.ok) throw new Error('Failed to load PODES data');
       const podesResult = await podesResponse.json();
       
