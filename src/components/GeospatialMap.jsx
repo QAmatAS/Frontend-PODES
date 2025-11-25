@@ -52,7 +52,7 @@ const GeospatialMap = () => {
   const [error, setError] = useState(null);
 
   // Kategori utama (dengan opsi "Semua")
-  const categories = ['Semua', 'Pendidikan', 'Kesehatan', 'Infrastruktur & Konektivitas', 'Lingkungan & Kebencanaan'];
+  const categories = ['Semua', 'Pendidikan', 'Kesehatan', 'Infrastruktur & Konektivitas', 'Lingkungan & Kebencanaan', 'IKG (Indeks Kesulitan Geografis)'];
 
   // Mapping indikator per kategori (sama seperti di sidebar)
   const indicatorsByCategory = {
@@ -63,7 +63,8 @@ const GeospatialMap = () => {
       'jumlah_tk': 'Jumlah TK',
       'jumlah_sd': 'Jumlah SD',
       'jumlah_smp': 'Jumlah SMP',
-      'jumlah_sma': 'Jumlah SMA'
+      'jumlah_sma': 'Jumlah SMA',
+      'total_fasilitas_pendidikan': 'Total Fasilitas Pendidikan'
     },
     'Kesehatan': {
       'jumlah_rs': 'Jumlah Rumah Sakit',
@@ -97,6 +98,12 @@ const GeospatialMap = () => {
       'permukiman_bantaran_sungai': 'Permukiman Bantaran Sungai',
       'sumber_pencemaran_air_dari_pabrik': 'Pencemaran Air dari Pabrik',
       'jumlah_keluarga_pengguna_kayu_bakar': 'Jumlah Keluarga Pengguna Kayu Bakar'
+    },
+    'IKG (Indeks Kesulitan Geografis)': {
+      'ikg_total': 'IKG Total',
+      'ikg_pelayanan_dasar': 'IKG - Pelayanan Dasar',
+      'ikg_infrastruktur': 'IKG - Infrastruktur',
+      'ikg_aksesibilitas': 'IKG - Aksesibilitas'
     }
   };
 
@@ -122,8 +129,9 @@ const GeospatialMap = () => {
       if (!geoResponse.ok) throw new Error('Failed to load GeoJSON');
       const geoJson = await geoResponse.json();
       
-      // Load PODES data from correct endpoint
-      const podesResponse = await fetch('https://backend-podes.vercel.app/api/villages');
+      // Load PODES data from API (use environment variable or localhost)
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001/api';
+      const podesResponse = await fetch(`${apiUrl}/villages`);
       if (!podesResponse.ok) throw new Error('Failed to load PODES data');
       const podesResult = await podesResponse.json();
       
@@ -160,21 +168,28 @@ const GeospatialMap = () => {
     const quantitativeIndicators = [
       'jumlah_tk', 'jumlah_sd', 'jumlah_smp', 'jumlah_sma',
       'jumlah_rs', 'jumlah_puskesmas', 'jumlah_puskesmas_inap',
-      'jumlah_bts', 'jumlah_keluarga_pengguna_kayu_bakar'
+      'jumlah_bts', 'jumlah_keluarga_pengguna_kayu_bakar',
+      'total_fasilitas_pendidikan',
+      'ikg_total', 'ikg_pelayanan_dasar', 'ikg_infrastruktur', 'ikg_aksesibilitas'
     ];
     
     if (quantitativeIndicators.includes(indicator)) {
       // Range berbeda per indikator
       const ranges = {
-        jumlah_tk: [0, 1, 2],
-        jumlah_sd: [0, 2, 4, 6],
-        jumlah_smp: [0, 1, 2],
-        jumlah_sma: [0, 1, 2],
+        jumlah_tk: [0, 2, 5, 10],
+        jumlah_sd: [0, 2, 4, 8],
+        jumlah_smp: [0, 1, 2, 4],
+        jumlah_sma: [0, 1, 3, 6],
         jumlah_rs: [0, 1, 2],
         jumlah_puskesmas: [0, 1, 2],
         jumlah_puskesmas_inap: [0, 1, 2],
         jumlah_bts: [0, 2, 4, 6],
         jumlah_keluarga_pengguna_kayu_bakar: [0, 1, 2],
+        total_fasilitas_pendidikan: [0, 6, 10, 15, 25],
+        ikg_total: [0, 15, 20, 25, 30],
+        ikg_pelayanan_dasar: [0, 15, 25, 35],
+        ikg_infrastruktur: [0, 20, 35, 50],
+        ikg_aksesibilitas: [0, 5, 8, 10]
       };
 
       const range = ranges[indicator] || [0, 1, 2, 3];
@@ -248,15 +263,17 @@ const GeospatialMap = () => {
     const desaName = feature.properties.nm_kelurahan;
     const desaData = findDesaData(desaName);
     
-    const value = desaData ? desaData[selectedIndicator] : 0;
+    // Check if data exists for the selected indicator
+    const value = desaData ? desaData[selectedIndicator] : undefined;
+    const hasData = value !== undefined && value !== null;
     
     return {
-      fillColor: getColor(value, selectedIndicator),
+      fillColor: hasData ? getColor(value, selectedIndicator) : '#d1d5db', // Abu-abu untuk data tidak ada
       weight: 2,
       opacity: 1,
       color: 'white',
       dashArray: '3',
-      fillOpacity: 0.7
+      fillOpacity: hasData ? 0.7 : 0.4 // Lebih transparan jika tidak ada data
     };
   };
 
@@ -276,7 +293,9 @@ const GeospatialMap = () => {
           <em style="color: #6b7280; font-size: 0.875rem;">Pilih indikator spesifik untuk melihat data</em>
         </div>`;
       } else {
-        const value = desaData ? desaData[selectedIndicator] : 'N/A';
+        const rawValue = desaData ? desaData[selectedIndicator] : undefined;
+        // Handle undefined/null values gracefully
+        const value = (rawValue !== undefined && rawValue !== null) ? rawValue : 'Tidak Ada Data';
         const indicatorLabel = indicatorsByCategory[selectedCategory]?.[selectedIndicator] || selectedIndicator;
         
         tooltipContent = `<div style="padding: 8px;">

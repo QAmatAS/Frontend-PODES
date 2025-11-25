@@ -6,6 +6,7 @@ import PENDIDIKAN_INDICATORS from './indicators/pendidikan.js';
 import KESEHATAN_INDICATORS from './indicators/kesehatan.js';
 import LINGKUNGAN_KONEKTIVITAS_INDICATORS from './indicators/lingkungan_konektivitas.js';
 import LINGKUNGAN_KEBENCANAAN_INDICATORS from './indicators/lingkungan_kebencanaan.js';
+import IKG_INDICATORS from './indicators/ikg.js';
 
 /**
  * Color tokens for charts following existing design system
@@ -156,6 +157,29 @@ export const CATEGORIES_CONFIG = {
         distribusi: CHART_COLORS.orange
       },
       accessor: (row) => row[indicator.dataKey] || '-'
+    }))
+  },
+
+  ikg: {
+    key: 'IKG (Indeks Kesulitan Geografis)',
+    title: 'IKG (Indeks Kesulitan Geografis)',
+    defaultOpenIndicator: 'ikg_total',
+    indicators: IKG_INDICATORS.map(indicator => ({
+      key: indicator.key,
+      label: indicator.label,
+      dataKey: indicator.dataKey,
+      accessor: (row) => row[indicator.dataKey] || 0,
+      colorTokens: {
+        ranking: indicator.key === 'ikg_total' ? CHART_COLORS.purple :
+                 indicator.key === 'ikg_pelayanan_dasar' ? CHART_COLORS.blue :
+                 indicator.key === 'ikg_infrastruktur' ? CHART_COLORS.orange :
+                 CHART_COLORS.green,
+        distribusi: indicator.key === 'ikg_total' ? CHART_COLORS.magenta :
+                    indicator.key === 'ikg_pelayanan_dasar' ? CHART_COLORS.cyan :
+                    indicator.key === 'ikg_infrastruktur' ? CHART_COLORS.red :
+                    CHART_COLORS.teal
+      },
+      icon: indicator.icon
     }))
   }
 };
@@ -353,6 +377,42 @@ export const COMPARISON_CONFIG = {
         color: CHART_COLORS.pink
       }
     ]
+  },
+
+  ikg: {
+    key: 'ikg',
+    title: 'IKG (Indeks Kesulitan Geografis)',
+    icon: '📊',
+    indicators: [
+      {
+        key: 'ikg_total',
+        label: 'IKG Total',
+        dataKey: 'ikg_total',
+        accessor: (row) => row.ikg_total || 0,
+        color: CHART_COLORS.purple
+      },
+      {
+        key: 'ikg_pelayanan_dasar',
+        label: 'IKG Pelayanan Dasar',
+        dataKey: 'ikg_pelayanan_dasar',
+        accessor: (row) => row.ikg_pelayanan_dasar || 0,
+        color: CHART_COLORS.blue
+      },
+      {
+        key: 'ikg_infrastruktur',
+        label: 'IKG Infrastruktur',
+        dataKey: 'ikg_infrastruktur',
+        accessor: (row) => row.ikg_infrastruktur || 0,
+        color: CHART_COLORS.orange
+      },
+      {
+        key: 'ikg_aksesibilitas',
+        label: 'IKG Aksesibilitas',
+        dataKey: 'ikg_aksesibilitas',
+        accessor: (row) => row.ikg_aksesibilitas || 0,
+        color: CHART_COLORS.green
+      }
+    ]
   }
 };
 
@@ -369,6 +429,7 @@ export const getCategoryConfig = (categoryKey) => {
   const categoryMapping = {
     'infrastruktur & konektivitas': 'lingkungan_konektivitas',
     'lingkungan & kebencanaan': 'lingkungan_kebencanaan',
+    'ikg (indeks kesulitan geografis)': 'ikg',
     'pendidikan': 'pendidikan',
     'kesehatan': 'kesehatan'
   };

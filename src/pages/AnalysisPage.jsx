@@ -137,7 +137,7 @@ const AnalysisPage = ({ setCurrentPage }) => {
   // Category indicators mapping using centralized selector
   const categoryIndicators = useMemo(() => {
     // Use centralized selector to get indicators for each category
-    const categories = ['Pendidikan', 'Kesehatan', 'Infrastruktur & Konektivitas', 'Lingkungan & Kebencanaan'];
+    const categories = ['Pendidikan', 'Kesehatan', 'Infrastruktur & Konektivitas', 'Lingkungan & Kebencanaan', 'IKG (Indeks Kesulitan Geografis)'];
     const mapping = {};
     
     categories.forEach(category => {
@@ -569,8 +569,8 @@ const AnalysisPage = ({ setCurrentPage }) => {
               {/* Ringkasan Seluruh Indikator Section - Generic for ALL categories */}
               {filters.indicator === 'Semua' && (
                 <>
-                  {/* Use legacy IndicatorsSummary for quantitative categories (Pendidikan, Kesehatan) */}
-                  {(filters.category === 'Pendidikan' || filters.category === 'Kesehatan') && (
+                  {/* Use legacy IndicatorsSummary for quantitative categories (Pendidikan, Kesehatan, IKG) */}
+                  {(filters.category === 'Pendidikan' || filters.category === 'Kesehatan' || filters.category === 'IKG (Indeks Kesulitan Geografis)') && (
                     <IndicatorsSummary 
                       categoryKey={filters.category}
                       data={data}
