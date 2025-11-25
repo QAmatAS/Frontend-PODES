@@ -5,6 +5,7 @@ import { PENDIDIKAN_COLUMNS } from './columns.pendidikan.js';
 import { KESEHATAN_COLUMNS } from './columns.kesehatan.js';
 import { INFRASTRUKTUR_KONEKTIVITAS_COLUMNS } from './columns.lingkungan_konektivitas.js';
 import { LINGKUNGAN_KEBENCANAAN_COLUMNS } from './columns.lingkungan_kebencanaan.js';
+import { IKG_COLUMNS } from './columns.ikg.js';
 
 /**
  * Get column configuration for a specific category
@@ -29,6 +30,11 @@ export function getColumnsForCategory(categoryKey) {
     case 'lingkungan & kebencanaan':
       return LINGKUNGAN_KEBENCANAAN_COLUMNS;
     
+    case 'ikg_(indeks_kesulitan_geografis)':
+    case 'ikg':
+    case 'indeks_kesulitan_geografis':
+      return IKG_COLUMNS;
+    
     default:
       console.warn(`No column configuration found for category: ${categoryKey}`);
       return [];
@@ -43,7 +49,8 @@ export function getAvailableCategories() {
     'Pendidikan',
     'Kesehatan', 
     'Infrastruktur & Konektivitas',
-    'Lingkungan & Kebencanaan'
+    'Lingkungan & Kebencanaan',
+    'IKG (Indeks Kesulitan Geografis)'
   ];
 }
 

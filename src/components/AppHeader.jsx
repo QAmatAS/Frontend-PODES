@@ -79,13 +79,16 @@ const AppHeader = ({
               cursor: logoHref ? 'pointer' : 'default'
             }}
           >
-            <Avatar sx={{ 
-              bgcolor: purpleTheme.primary,
-              width: 40,
-              height: 40
-            }}>
-              <Analytics />
-            </Avatar>
+            <Box
+              component="img"
+              src="/Logo-BPS.png"
+              alt="Logo BPS"
+              sx={{ 
+                width: 40,
+                height: 40,
+                objectFit: 'contain'
+              }}
+            />
             <Typography variant="h6" sx={{ 
               fontWeight: 700,
               color: '#1f2937'
