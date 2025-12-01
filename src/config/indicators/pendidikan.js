@@ -10,7 +10,7 @@ export const PENDIDIKAN_INDICATORS = [
   },
   { 
     key: "sd", 
-    label: "Jumlah SD", 
+    label: "Jumlah SD/Sederajat", 
     type: "quantitative",
     icon: "📚",
     dataKey: "jumlah_sd",
@@ -18,7 +18,7 @@ export const PENDIDIKAN_INDICATORS = [
   },
   { 
     key: "smp", 
-    label: "Jumlah SMP", 
+    label: "Jumlah SMP/Sederajat", 
     type: "quantitative",
     icon: "🏫",
     dataKey: "jumlah_smp",
@@ -26,7 +26,7 @@ export const PENDIDIKAN_INDICATORS = [
   },
   { 
     key: "sma", 
-    label: "Jumlah SMA", 
+    label: "Jumlah SMA/Sederajat", 
     type: "quantitative",
     icon: "🎯",
     dataKey: "jumlah_sma",

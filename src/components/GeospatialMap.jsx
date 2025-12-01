@@ -61,9 +61,9 @@ const GeospatialMap = () => {
     },
     'Pendidikan': {
       'jumlah_tk': 'Jumlah TK',
-      'jumlah_sd': 'Jumlah SD',
-      'jumlah_smp': 'Jumlah SMP',
-      'jumlah_sma': 'Jumlah SMA',
+      'jumlah_sd': 'Jumlah SD/Sederajat',
+      'jumlah_smp': 'Jumlah SMP/Sederajat',
+      'jumlah_sma': 'Jumlah SMA/Sederajat',
       'total_fasilitas_pendidikan': 'Total Fasilitas Pendidikan'
     },
     'Kesehatan': {

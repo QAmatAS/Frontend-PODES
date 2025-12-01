@@ -39,9 +39,9 @@ export function getIndicatorsForCategory(categoryKey) {
   // Label mapping for fallback
   const labels = {
     'jumlah_tk': 'Jumlah TK',
-    'jumlah_sd': 'Jumlah SD', 
-    'jumlah_smp': 'Jumlah SMP',
-    'jumlah_sma': 'Jumlah SMA',
+    'jumlah_sd': 'Jumlah SD/Sederajat', 
+    'jumlah_smp': 'Jumlah SMP/Sederajat',
+    'jumlah_sma': 'Jumlah SMA/Sederajat',
     'jumlah_puskesmas': 'Jumlah Puskesmas',
     'jumlah_rs': 'Jumlah Rumah Sakit'
   };

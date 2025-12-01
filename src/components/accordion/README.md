@@ -78,7 +78,7 @@ import { Accordion, AccordionItem } from '../components/accordion';
   <AccordionItem id="tk" icon="🎓" title="Jumlah TK">
     <IndicatorPanel data={data} indicator={tkIndicator} />
   </AccordionItem>
-  <AccordionItem id="sd" icon="📚" title="Jumlah SD">
+  <AccordionItem id="sd" icon="📚" title="Jumlah SD/Sederajat">
     <IndicatorPanel data={data} indicator={sdIndicator} />
   </AccordionItem>
 </Accordion>

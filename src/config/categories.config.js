@@ -47,7 +47,7 @@ export const CATEGORIES_CONFIG = {
       },
       {
         key: 'sd',
-        label: 'Jumlah SD',
+        label: 'Jumlah SD/Sederajat',
         dataKey: 'jumlah_sd',
         accessor: (row) => row.jumlah_sd || 0,
         colorTokens: {
@@ -58,7 +58,7 @@ export const CATEGORIES_CONFIG = {
       },
       {
         key: 'smp',
-        label: 'Jumlah SMP',
+        label: 'Jumlah SMP/Sederajat',
         dataKey: 'jumlah_smp',
         accessor: (row) => row.jumlah_smp || 0,
         colorTokens: {
@@ -69,7 +69,7 @@ export const CATEGORIES_CONFIG = {
       },
       {
         key: 'sma',
-        label: 'Jumlah SMA',
+        label: 'Jumlah SMA/Sederajat',
         dataKey: 'jumlah_sma',
         accessor: (row) => row.jumlah_sma || 0,
         colorTokens: {
@@ -203,21 +203,21 @@ export const COMPARISON_CONFIG = {
       },
       {
         key: 'sd',
-        label: 'Jumlah SD',
+        label: 'Jumlah SD/Sederajat',
         dataKey: 'jumlah_sd',
         accessor: (row) => row.jumlah_sd || 0,
         color: CHART_COLORS.purple
       },
       {
         key: 'smp',
-        label: 'Jumlah SMP',
+        label: 'Jumlah SMP/Sederajat',
         dataKey: 'jumlah_smp',
         accessor: (row) => row.jumlah_smp || 0,
         color: CHART_COLORS.blue
       },
       {
         key: 'sma',
-        label: 'Jumlah SMA',
+        label: 'Jumlah SMA/Sederajat',
         dataKey: 'jumlah_sma',
         accessor: (row) => row.jumlah_sma || 0,
         color: CHART_COLORS.indigo
